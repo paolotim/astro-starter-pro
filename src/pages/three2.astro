@@ -1,0 +1,45 @@
+---
+import WireframeSphere from "@/components/animations/WireframeSphere.astro";
+import WireframeTorus from "@/components/animations/WireframeTorus.astro";
+import WireframeTorusKnot from "@/components/animations/WireframeTorusKnot.astro";
+import WireframeOctahedron from "@/components/animations/WireframeOctahedron.astro";
+import AnimatedCheckeredGrid from "@/components/animations/AnimatedCheckeredGrid.astro";
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <!-- Default: green, orange, yellow, pink squares -->
+  <AnimatedCheckeredGrid />
+
+  <!-- Custom colors and sizing -->
+  <AnimatedCheckeredGrid
+    colors={["#6366f1", "#8b5cf6", "#a78bfa", "#c4b5fd"]}
+    cellSize={24}
+    rows={5}
+  />
+  <div
+    style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 50vh 50vh; height: 100vh;"
+  >
+    <div style="position: relative; background: #ecfdf5;">
+      <div style="position: absolute; inset: 0;">
+        <WireframeSphere color="#10b981" />
+      </div>
+    </div>
+    <div style="position: relative; background: #fff7ed;">
+      <div style="position: absolute; inset: 0;">
+        <WireframeTorus color="#fb923c" />
+      </div>
+    </div>
+    <div style="position: relative; background: #fdf2f8;">
+      <div style="position: absolute; inset: 0;">
+        <WireframeTorusKnot color="#ec4899" />
+      </div>
+    </div>
+    <div style="position: relative; background: #fdf2f8;">
+      <div style="position: absolute; inset: 0;">
+        <WireframeOctahedron color="#ec4899" />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

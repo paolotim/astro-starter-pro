@@ -1,0 +1,178 @@
+---
+interface Props {
+  colors?: string[];
+  cellSize?: number;
+  rows?: number;
+  class?: string;
+}
+
+const {
+  colors = ["#10b981", "#fb923c", "#facc15", "#ec4899"],
+  cellSize = 20,
+  rows = 7,
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class:list={["animated-checker-grid", className]}
+  data-colors={JSON.stringify(colors)}
+  data-cell-size={cellSize}
+  data-rows={rows}
+  style="width: 100%; overflow: hidden; display: flex; justify-content: center;"
+>
+</div>
+
+<script>
+  function initCheckerGrid(container: HTMLElement) {
+    const colors: string[] = JSON.parse(
+      container.dataset.colors || '["#10b981","#fb923c","#facc15","#ec4899"]',
+    );
+    const cellSize = parseInt(container.dataset.cellSize || "20", 10);
+    const rows = parseInt(container.dataset.rows || "7", 10);
+
+    let cols = Math.floor(window.innerWidth / cellSize);
+    let totalCells = rows * cols;
+    let mounted = true;
+
+    // Build the grid element
+    const grid = document.createElement("div");
+    grid.style.position = "relative";
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+    grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+    grid.style.gap = "0";
+    grid.style.maxWidth = "100%";
+    container.appendChild(grid);
+
+    // Create cells
+    let cells: HTMLDivElement[] = [];
+    function buildCells() {
+      grid.innerHTML = "";
+      cells = [];
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement("div");
+        cell.style.width = `${cellSize}px`;
+        cell.style.height = `${cellSize}px`;
+        cell.style.borderWidth = "0.5px";
+        cell.style.borderStyle = "solid";
+        cell.style.borderColor = "rgba(0,0,0,0.06)";
+        cell.style.transition = "background-color 0.3s, opacity 0.3s";
+        cell.style.backgroundColor = "";
+        cell.style.opacity = "1";
+        grid.appendChild(cell);
+        cells.push(cell);
+      }
+    }
+    buildCells();
+
+    // --- Scroll-based wave ---
+    function getScrollProgress(): number {
+      const rect = container.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      return Math.max(
+        0,
+        Math.min(1, 1 - (rect.top + rect.height / 2) / windowH),
+      );
+    }
+
+    let scrollProgress = getScrollProgress();
+    function onScroll() {
+      scrollProgress = getScrollProgress();
+      lastScrollTime = Date.now();
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    function getWaveCells(): Set<number> {
+      const lit = new Set<number>();
+      const offset = scrollProgress * cols * 2;
+      for (let i = 0; i < totalCells; i++) {
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const wave = 0.5 * Math.sin(0.3 * col - offset) + 0.5;
+        const rowOffset = 3 * row;
+        const pattern = (col + row) % 3 === 0;
+        if (
+          (col + rowOffset) % 8 === Math.floor(8 * wave) &&
+          pattern &&
+          wave > 0.4
+        ) {
+          lit.add(i);
+        }
+      }
+      return lit;
+    }
+
+    // --- Random flicker when idle ---
+    let lastScrollTime = Date.now();
+    let flickerSet = new Set<number>();
+
+    function flickerTick() {
+      if (Date.now() - lastScrollTime > 500) {
+        const next = new Set<number>();
+        const count = 3 + Math.floor(5 * Math.random());
+        for (let i = 0; i < count; i++) {
+          next.add(Math.floor(Math.random() * totalCells));
+        }
+        flickerSet = next;
+        setTimeout(() => {
+          flickerSet = new Set();
+        }, 300);
+      }
+    }
+    const flickerInterval = setInterval(flickerTick, 800);
+
+    // --- Render loop ---
+    let raf: number;
+    function render() {
+      if (!mounted) return;
+      const waveCells = getWaveCells();
+
+      for (let i = 0; i < totalCells; i++) {
+        const cell = cells[i];
+        const isWave = waveCells.has(i);
+        const isFlicker = flickerSet.has(i);
+
+        if (isFlicker || isWave) {
+          const colorIndex = i % colors.length;
+          cell.style.backgroundColor = colors[colorIndex];
+          cell.style.opacity = isFlicker ? "0.4" : "0.5";
+        } else {
+          cell.style.backgroundColor = "";
+          cell.style.opacity = "1";
+        }
+      }
+
+      raf = requestAnimationFrame(render);
+    }
+    raf = requestAnimationFrame(render);
+
+    // --- Resize ---
+    function onResize() {
+      cols = Math.floor(window.innerWidth / cellSize);
+      totalCells = rows * cols;
+      grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+      grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+      buildCells();
+    }
+    window.addEventListener("resize", onResize);
+
+    // Cleanup
+    return () => {
+      mounted = false;
+      cancelAnimationFrame(raf);
+      clearInterval(flickerInterval);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
+  }
+
+  document
+    .querySelectorAll<HTMLElement>(".animated-checker-grid")
+    .forEach((el) => {
+      if (!el.dataset.initialized) {
+        el.dataset.initialized = "true";
+        initCheckerGrid(el);
+      }
+    });
+</script>

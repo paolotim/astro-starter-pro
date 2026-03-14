@@ -1,0 +1,50 @@
+---
+import WireframeSphere from "@/components/animations/WireframeSphere.astro";
+import WireframeTorus from "@/components/animations/WireframeTorus.astro";
+import WireframeTorusKnot from "@/components/animations/WireframeTorusKnot.astro";
+import WireframeOctahedron from "@/components/animations/WireframeOctahedron.astro";
+import WireframeWormhole from "@/components/animations/WireframeWormhole.astro";
+---
+
+<section style="position: relative; height: 400px; background: #f0fdf4;">
+  <h1>Featured</h1>
+  <div style="position: absolute; inset: 0; pointer-events: none;">
+    <WireframeSphere color="#10b981" />
+  </div>
+</section>
+
+<section style="position: relative; height: 300px; background: #fff7ed;">
+  <h2>All Posts</h2>
+  <div
+    style="position: absolute; right: 0; top: 0; bottom: 0; width: 40%; pointer-events: none;"
+  >
+    <WireframeTorusKnot color="#fb923c" />
+  </div>
+</section>
+
+<section style="position: relative; height: 300px; background: #fff7ed;">
+  <h2>All Posts</h2>
+  <div
+    style="position: absolute; right: 0; top: 0; bottom: 0; width: 40%; pointer-events: none;"
+  >
+    <WireframeTorus color="#fb923c" />
+  </div>
+</section>
+
+<section style="position: relative; height: 400px; background: #f0fdf4;">
+  <h1>Featured</h1>
+  <div style="position: absolute; inset: 0; pointer-events: none;">
+    <WireframeOctahedron color="#10b981" />
+  </div>
+</section>
+
+<section style="position: relative; height: 400px; background: #f0fdf4;">
+  <h1>Featured</h1>
+  <div style="position: absolute; inset: 0; pointer-events: none;">
+    <WireframeWormhole color="#10b981" />
+  </div>
+</section>
+
+<!-- Or use different colors anywhere -->
+<WireframeSphere color="#ec4899" class="w-64 h-64" />
+<WireframeTorus color="#facc15" class="w-full h-96" />
