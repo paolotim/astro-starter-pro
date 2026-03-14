@@ -9,13 +9,17 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-card: var(--card);
+
+  /* Max widths */
+  --max-width-content: 1500px;
+  --max-width-bleed: 1920px;
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f1efeb;
   --foreground: #0a0a0a;
   --primary: #0254d8;
-  --border: #e5e7eb;
+  --border: #dedad4;
   --muted: #f4f4f5;
   --muted-foreground: #52525b;
   --card: #ffffff;

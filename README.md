@@ -49,7 +49,7 @@
 
 <br>
 
-<img alt="PageSpeed Insights Score 100/100" src="https://github.com/user-attachments/assets/541d4bfc-bcb9-4287-bd91-08564108d706" />
+`<img alt="PageSpeed Insights Score 100/100" src="https://github.com/user-attachments/assets/541d4bfc-bcb9-4287-bd91-08564108d706" />`
 
 <br>
 
@@ -57,7 +57,7 @@
 
 This template is built with modern, high-performance technologies:
 
-- **[Astro 5](https://astro.build/)**: The web framework for building content-driven websites.
+- **[Astro 6](https://astro.build/)**: The web framework for building content-driven websites.
 - **[Tailwind CSS 4](https://tailwindcss.com/)**: A utility-first CSS framework for rapid UI development.
 - **[TypeScript](https://www.typescriptlang.org/)**: Strongly typed programming language that builds on JavaScript.
 - **[MDX](https://mdxjs.com/)**: Markdown for the component era, allowing you to use JSX in your markdown content.

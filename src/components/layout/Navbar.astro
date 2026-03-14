@@ -4,7 +4,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
 ---
 
 <nav
-  class="fixed top-0 z-50 w-full border-b border-border bg-background md:bg-background/50 md:backdrop-blur"
+  class="fixed top-0 z-50 w-full border-b border-border bg-background/80 md:bg-background/50 md:backdrop-blur-sm"
 >
   <div
     class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
@@ -12,7 +12,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
     <div class="flex items-center gap-2">
       <a
         href="/"
-        class="text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary"
+        class="text-xl font-bold font-mono tracking-tight text-foreground transition-colors hover:text-primary"
       >
         {siteConfig.name}
       </a>
@@ -25,7 +25,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle.astro";
           siteConfig.navLinks.map((link) => (
             <a
               href={link.href}
-              class="text-sm font-medium text-foreground transition-colors hover:text-primary"
+              class="text-sm font-medium font-mono text-foreground transition-colors hover:text-primary"
             >
               {link.text}
             </a>
