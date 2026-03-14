@@ -22,7 +22,7 @@
   --border: #dedad4;
   --muted: #f4f4f5;
   --muted-foreground: #52525b;
-  --card: #ffffff;
+  --card: #f9f7f3;
 }
 
 :root[data-theme="dark"] {

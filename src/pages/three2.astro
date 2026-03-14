@@ -10,7 +10,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 
 <BaseLayout>
   <!-- Default: green, orange, yellow, pink squares -->
-  <AnimatedCheckeredGrid />
+  <AnimatedCheckeredGrid class="max-w-screen-xl border-x border-border" />
 
   <!-- Custom colors and sizing -->
   <AnimatedCheckeredGrid
@@ -19,14 +19,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     rows={5}
   />
   <div
+    class="max-w-screen-xl border-x border-border mx-auto"
     style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 50vh 50vh; height: 100vh;"
   >
-    <div style="position: relative; background: #ecfdf5;">
+    <div style="position: relative; background: #dcfce7;">
       <div style="position: absolute; inset: 0;">
-        <WireframeSphere color="#10b981" />
+        <WireframeSphere color="#15803d" />
       </div>
     </div>
-    <div style="position: relative; background: #fff7ed;">
+    <div style="position: relative; background: #ffedd5;">
       <div style="position: absolute; inset: 0;">
         <WireframeTorus color="#fb923c" />
       </div>
